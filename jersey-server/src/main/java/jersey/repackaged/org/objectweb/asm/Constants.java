@@ -207,11 +207,18 @@ final class Constants {
       throw new IllegalStateException("Bytecode not available, can't check class version");
     }
     int minorVersion;
-    try (DataInputStream callerClassStream = new DataInputStream(classInputStream); ) {
+    DataInputStream callerClassStream = new DataInputStream(classInputStream);
+    try {
       callerClassStream.readInt();
       minorVersion = callerClassStream.readUnsignedShort();
     } catch (IOException ioe) {
       throw new IllegalStateException("I/O error, can't check class version", ioe);
+    } finally {
+      try {
+        callerClassStream.close();
+      } catch (IOException ioe) {
+        throw new IllegalStateException("I/O error, could not close class stream", ioe);
+      }
     }
     if (minorVersion != 0xFFFF) {
       throw new IllegalStateException(

@@ -315,7 +315,8 @@ public class ClassReader {
       throw new IOException("Class not found");
     }
     int bufferSize = computeBufferSize(inputStream);
-    try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
+    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+    try {
       byte[] data = new byte[bufferSize];
       int bytesRead;
       int readCount = 0;
@@ -329,6 +330,7 @@ public class ClassReader {
       }
       return outputStream.toByteArray();
     } finally {
+      outputStream.close();
       if (close) {
         inputStream.close();
       }
