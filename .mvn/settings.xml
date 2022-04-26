@@ -1,0 +1,9 @@
+<settings>
+  <mirrors>
+    <mirror>
+      <id>jboss-secure</id>
+      <url>https://repository.jboss.org/nexus/content/groups/public/</url>
+      <mirrorOf>repository.jboss.org</mirrorOf>
+    </mirror>
+  </mirrors>
+</settings>
